@@ -34,6 +34,16 @@ var requestHandler = function (req, res) {
         }
       }
 
+	  if (settings.apiKey) {
+	      var queryParam = require('url').parse(req.url, true);
+
+		  if (queryParam.query.key != settings.apiKey) {
+			res.statusCode = 401;
+			res.end('Access denied');
+			return;
+		  }
+	  }
+
       // Enable CORS requests
       res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
       res.setHeader('Access-Control-Allow-Origin', '*');
